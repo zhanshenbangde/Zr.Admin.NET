@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 #创建 /app文件夹
 WORKDIR /app
 #创建挂载目录,用于将程序部署在服务器本地
@@ -6,8 +6,8 @@ WORKDIR /app
 #设置docker容器对外暴露端口
 EXPOSE 8888
 VOLUME /app/logs
-#COPY bin/Release/net5.0/publish/ app/
-COPY . app/
+COPY bin/Release/net8.0/publish/ .
+#COPY . app/
 
 #设置容器内的时区，如果不设置，默认时区是标准时间比北京时间晚8个小时
 RUN echo "Asia/shanghai" > /etc/timezone
@@ -19,3 +19,4 @@ WORKDIR /app
 
 #等价于 dotnet ZR.Admin.WebApi.dll，如果不指定启动端口默认在docker里面启动端口是80端口
 ENTRYPOINT ["dotnet", "ZR.Admin.WebApi.dll", "--server.urls","http://*:8888"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
