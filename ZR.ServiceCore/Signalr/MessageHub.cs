@@ -1,4 +1,4 @@
-﻿using Infrastructure;
+using Infrastructure;
 using Infrastructure.Model;
 using IPTools.Core;
 using Mapster;
@@ -197,6 +197,17 @@ namespace ZR.ServiceCore.Signalr
             }
 
             Console.WriteLine($"用户{userName}对{toUserId}说：{message}");
+        }
+
+   
+
+        /// <summary>
+        /// 发送报警信息给所有在线用户
+        /// </summary>
+        /// <param name="alarmInfo">报警信息</param>
+        public async Task SendAlarmMessage(object alarmInfo)
+        {
+            await Clients.All.SendAsync("receiveAlarm", alarmInfo);
         }
 
         private OnlineUsers GetUserByConnId(string connId)

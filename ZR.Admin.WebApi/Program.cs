@@ -8,6 +8,7 @@ using ZR.Admin.WebApi.Extensions;
 using ZR.Common.Cache;
 using ZR.Common.DynamicApiSimple.Extens;
 using ZR.Infrastructure.WebExtensions;
+using ZR.Service.System;
 using ZR.ServiceCore.Signalr;
 using ZR.ServiceCore.SqlSugar;
 
@@ -19,7 +20,7 @@ builder.Host.UseNLog();
 builder.Services.AddDynamicApi();
 // Add services to the container.
 builder.Services.AddControllers();
-
+builder.Services.AddHostedService<AlarmMessageConsumer>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -9,6 +9,9 @@
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
+	  <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\ZR.ServiceCore\ZR.ServiceCore.csproj" />
 	</ItemGroup>
 

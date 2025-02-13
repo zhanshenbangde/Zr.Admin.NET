@@ -1,4 +1,4 @@
-﻿using SqlSugar.IOC;
+using SqlSugar.IOC;
 using ZR.Model;
 using ZR.Model.Content;
 using ZR.Model.Models;
@@ -60,6 +60,11 @@ namespace ZR.ServiceCore.SqlSugar
             db.CodeFirst.InitTables(typeof(ArticleTopic));
             db.CodeFirst.InitTables(typeof(BannerConfig));
             db.CodeFirst.InitTables(typeof(SysUserMsg));
+            db.CodeFirst.InitTables(typeof(SysAlgorithm)); //添加算法管理表初始化
+            db.CodeFirst.InitTables(typeof(SysCamera)); //添加摄像头管理表初始化
+            db.CodeFirst.InitTables(typeof(SysAlarmRecord)); //添加报警记录表初始化
+            db.CodeFirst.InitTables(typeof(SysTask)); //添加任务管理表初始化
+            db.CodeFirst.InitTables(typeof(SysTaskDetail)); //添加任务组合表初始化
             //db.CodeFirst.InitTables(typeof(UserOnlineLog));
         }
         public static void InitNewTb()

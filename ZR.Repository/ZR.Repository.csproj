@@ -15,4 +15,8 @@
 		<PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
 		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.143" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="System\" />
+	</ItemGroup>
 </Project>

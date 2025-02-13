@@ -122,29 +122,47 @@ namespace ZR.Common
             return Cache.TryGetValue(key, out _);
         }
 
+        private static readonly object _lock = new object();
 
-        /// <summary>
-        /// 获取所有缓存键
-        /// </summary>
-        /// <returns></returns>
         public static List<string> GetCacheKeys()
         {
-            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            //var entries = Cache.GetType().GetField("_entries", flags).GetValue(Cache);
-
-            //.net7需要这样写 
-            var coherentState = Cache.GetType().GetField("_coherentState", flags).GetValue(Cache);
-            var entries = coherentState.GetType().GetField("_entries", flags).GetValue(coherentState);
-
-            var keys = new List<string>();
-            if (entries is not IDictionary cacheItems) return keys;
-            foreach (DictionaryEntry cacheItem in cacheItems)
+            lock (_lock)
             {
-                keys.Add(cacheItem.Key.ToString());
-                //Console.WriteLine("缓存key=" +cacheItem.Key);
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                var coherentState = Cache.GetType().GetField("_coherentState", flags).GetValue(Cache);
+                var entries = coherentState.GetType().GetField("_entries", flags)?.GetValue(coherentState);
+
+                var keys = new List<string>();
+                if (entries is not IDictionary cacheItems) return keys;
+                foreach (DictionaryEntry cacheItem in cacheItems)
+                {
+                    keys.Add(cacheItem.Key.ToString());
+                }
+                return keys;
             }
-            return keys;
         }
+        ///// <summary>
+        ///// 获取所有缓存键
+        ///// </summary>
+        ///// <returns></returns>
+        //public static List<string> GetCacheKeys()
+        //{
+        //    const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        //    var entries = Cache.GetType().GetField("_entries", flags).GetValue(Cache);
+
+        //    //.net7需要这样写 
+        //    //var coherentState = Cache.GetType().GetField("_coherentState", flags).GetValue(Cache);
+        //    //var entries = coherentState.GetType().GetField("_entries", flags).GetValue(coherentState);
+
+        //    var keys = new List<string>();
+        //    if (entries is not IDictionary cacheItems) return keys;
+        //    foreach (DictionaryEntry cacheItem in cacheItems)
+        //    {
+        //        keys.Add(cacheItem.Key.ToString());
+        //        //Console.WriteLine("缓存key=" +cacheItem.Key);
+        //    }
+        //    return keys;
+        //}
     }
 }
 

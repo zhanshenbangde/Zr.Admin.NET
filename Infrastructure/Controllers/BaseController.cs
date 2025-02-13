@@ -52,6 +52,8 @@ namespace Infrastructure.Controllers
             return Content(jsonStr, "application/json");
         }
 
+      
+
         protected IActionResult ToResponse(ResultCode resultCode, string msg = "")
         {
             return ToResponse(new ApiResult((int)resultCode, msg));
